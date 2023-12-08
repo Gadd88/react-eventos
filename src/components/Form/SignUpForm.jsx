@@ -1,62 +1,66 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 const SignUpForm = () => {
-    const handleFormSubmit = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const formObject = Object.fromEntries(formData.entries())
-        console.log(formObject)
+    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    
+    const handleFormSubmit = (data) => {
+        // e.preventDefault()
+        // const formData = new FormData(e.currentTarget)
+        // const formObject = Object.fromEntries(formData.entries())
+        console.log(data)
     }
     const handleFormReset = () => {
-        document.getElementById('signUpForm').reset()
+        // document.getElementById('signUpForm').reset()
+        reset()
     }
+    console.log(errors)
     
     return (
         <form 
             style={{display: 'flex', flexDirection: 'column'}}
-            onSubmit={handleFormSubmit}
+            onSubmit={handleSubmit(handleFormSubmit)}
             id='signUpForm'>
             <label htmlFor="name">Nombre</label>
             <input 
                 type="text"
                 name='name'
                 id='name'
-                required
+                {...register('name', {required:true})}
                  />
             <label htmlFor="age">Edad</label>
             <input 
                 type="number" 
                 name="age" 
                 id="age"
-                required 
+                {...register('age', {required:true})}
                 />
             <label htmlFor="address">Dirección</label>
             <input 
                 type="text"
                 name='address'
                 id='address'
-                required
+                {...register('address', {required:true})}
                  />
             <label htmlFor="zipCode">Codigo Postal</label>
             <input 
                 type="text"
                 id='zipCode'
                 name='zipCode'
-                required
+                {...register('zipCode', {required:true})}
                  />
             <label htmlFor="email">Email</label>
             <input 
                 type="email" 
                 name="email" 
                 id="email"
-                required 
+                {...register('email', {required:true})}
                 />
             <div className="buttons">
                 <button
                     type='submit'>enviar</button>
                 <button
                     type='button' onClick={handleFormReset}>reset</button>
-
             </div>
         </form>
     )
