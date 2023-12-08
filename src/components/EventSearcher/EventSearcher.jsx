@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 
-const EventSearcher = () => {
+const EventSearcher = ({onSearch}) => {
     
     const [inputValue, setInputValue] = useState('')
     const handleInputChange = (e) => {
         setInputValue(e.target.value)
+    }
+    const handleInputKeyDown = (e) => {
+        if(e.key === 'Enter'){
+            onSearch(inputValue)
+        }
+        
     }
   
     return (
@@ -17,7 +23,8 @@ const EventSearcher = () => {
                 type="text" 
                 id='searchedEvent'
                 onChange={handleInputChange}
-                value={inputValue} />
+                value={inputValue}
+                onKeyDown={handleInputKeyDown} />
         </div>
     )
 }

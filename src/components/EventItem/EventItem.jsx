@@ -1,6 +1,10 @@
 import React from 'react'
 
-const EventItem = ({event}) => {
+const EventItem = ({event, onEventClick}) => {
+    const handleEventItemClick = (event) => {
+        event.stopPropagation();
+        onEventClick(id)
+    }
     const { id, name, images, dates, info } = event
   return (
     <div>
@@ -17,6 +21,7 @@ const EventItem = ({event}) => {
             <summary>Presiona aquí para ver mas información del evento</summary>
             <p>{info}</p>    
         </details>
+        <button onClick={(event) => handleEventItemClick(event)}>Ver mas</button>
     </div>
   )
 }
