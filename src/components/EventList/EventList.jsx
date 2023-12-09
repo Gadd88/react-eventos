@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { API_KEY } from '../../dataApi/data'
+import React from 'react'
+import { useEventsData } from '../../hooks/useEventsData'
 import EventItem from '../EventItem/EventItem'
 
 const EventList = ({ searchTerm }) => {
 
-    const [eventsData, setEventsData] = useState([])
-    const consultaApi = async () => {
-        const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=MX&apikey=${API_KEY}`)
-        const result = await response.json();
-        setEventsData(result._embedded.events)
-    }
+    const { eventsData, isLoading, error } = useEventsData()
 
-    useEffect(() => {
-        consultaApi()
-    },[])
     const handleEventClick = (id) => {
         
         console.log(id)
@@ -27,21 +19,27 @@ const EventList = ({ searchTerm }) => {
         return (
             eventsFiltered.map((event) => (
                 <EventItem 
-                    key={event.id} 
-                    event={event}
-                    onEventClick={handleEventClick} />
-            ))
+                key={event.id} 
+                event={event}
+                onEventClick={handleEventClick} />
+                ))
         )
+    }        
+    if(isLoading){
+        return <div>Cargando Eventos...</div>
     }
-    
-  return (
-    <div>
-        <h2>Lista de Eventos</h2>
-        {
-            renderEvents() 
-        }
-    </div>
-  )
+    if(error){
+        return <div>Ha ocurrido un error trayendo los datos</div>
+    }
+
+    return (
+        <div>
+            <h2>Lista de Eventos</h2>
+            {
+                renderEvents() 
+            }
+        </div>
+    )
 }
 
 export default EventList

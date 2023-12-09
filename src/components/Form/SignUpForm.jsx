@@ -9,12 +9,12 @@ const SignUpForm = () => {
         // const formData = new FormData(e.currentTarget)
         // const formObject = Object.fromEntries(formData.entries())
         console.log(data)
+        console.log(errors)
     }
     const handleFormReset = () => {
         // document.getElementById('signUpForm').reset()
         reset()
     }
-    console.log(errors)
     
     return (
         <form 
