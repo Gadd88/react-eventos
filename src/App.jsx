@@ -7,14 +7,18 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')  
   const inputRef = useRef()
   return (
-    <>
-      <SignUpForm />
+    <div
+      style={{
+        width: '100%',
+        
+      }}>
+      {/* <SignUpForm /> */}
       <EventSearcher 
         onSearch={setSearchTerm}
         ref={inputRef}/>
       <EventList
         searchTerm={searchTerm}/>
-    </>
+    </div>
   )
 }
 

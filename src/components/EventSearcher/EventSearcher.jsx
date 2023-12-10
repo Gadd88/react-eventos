@@ -19,9 +19,21 @@ const EventSearcher = forwardRef(({onSearch}, ref) => {
   
     return (
         <div
-            ref={ref}>
+            ref={ref}
+            style={{
+                marginBottom: 14,
+                maxWidth: '500px',
+                margin: 'auto',
+                height: '60px',
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                alignItems: 'center'
+            }}>
             <label 
-                htmlFor='searchedEvent'>
+                htmlFor='searchedEvent'
+                style={{
+                    fleX: 1,
+                }}>
                 Busca tu Evento
             </label>
             <input 
@@ -29,7 +41,15 @@ const EventSearcher = forwardRef(({onSearch}, ref) => {
                 id='searchedEvent'
                 onChange={handleInputChange}
                 value={inputValue}
-                onKeyDown={handleInputKeyDown} />
+                onKeyDown={handleInputKeyDown}
+                style={{
+                    padding: 10, 
+                    borderRadius: 10, 
+                    outline: 'none', 
+                    border: 0,
+                    width: '300px',
+                    caretColor: 'red'
+                }}/>
         </div>
     )
 })
