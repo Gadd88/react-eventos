@@ -1,38 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEventsData } from '../../hooks/useEventsData'
 import EventItem from '../EventItem/EventItem'
 
-const EventList = ({ searchTerm }) => {
+const EventList = ({ searchTerm, allEvents }) => {
     const navigate = useNavigate()
-
-    const { eventsData, isLoading, error } = useEventsData()
 
     const handleEventClick = (id) => {
         navigate(`/detail/${id}`)
     }
+    const { eventsData, consultaApi } = useEventsData()
+    let searchedEvent
 
+    useEffect(() => {
+      consultaApi(searchTerm)
+    }, [searchTerm])
+    searchedEvent = eventsData
+    
     const renderEvents = () => {
-        let eventsFiltered = eventsData
-        if (searchTerm.length > 0) {
-            eventsFiltered = eventsFiltered.filter(event => event.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
-        }
+        let eventsFiltered = allEvents
+        if(searchedEvent?.length > 0) eventsFiltered = searchedEvent
         return (
-            eventsFiltered.map((event) => (
+            eventsFiltered.length > 0 &&
+            eventsFiltered?.map((event) => (
                 <EventItem 
                 key={event.id} 
                 event={event}
                 onEventClick={handleEventClick} />
                 ))
         )
-    }        
-    if(isLoading){
-        return <div>Cargando Eventos...</div>
     }
-    if(error){
-        return <div>Ha ocurrido un error trayendo los datos</div>
-    }
-
     return (
         <div>
             <h2>Lista de Eventos</h2>
